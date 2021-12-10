@@ -6,21 +6,21 @@ import { Container } from './styles';
 import api from '../../services/api';
 
 type Food  = {
+  available: boolean;
   id: number;
   image: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
 }
 
 interface FoodProps {
-  key: number,
   food: Food;
   handleDelete: (arg: number) => void;
   handleEditFood: (arg: Food) => void;
 }
 
-export function Food({ key, food, handleDelete, handleEditFood }: FoodProps ) {
+export function Food({  food, handleDelete, handleEditFood }: FoodProps ) {
 
     const [isAvailable, setIsAvaible] = useState(true);
     

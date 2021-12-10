@@ -2,15 +2,32 @@
 import { useState, useEffect } from 'react'
 import Header from '../../components/Header';
 import api from '../../services/api';
-import Food from '../../components/Food';
+import { Food } from '../../components/Food';
 import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
 
+type Food  = {
+  available: boolean;
+  id: number;
+  image: string;
+  name: string;
+  description: string;
+  price: string;
+}
+
+type AddFood  = {
+  image: string;
+  name: string;
+  description: string;
+  price: string;
+}
+
+
 const Dashboard = () => {
 
 
-  const [foods, setFoods] = useState([{
+  const [foods, setFoods] = useState<Food[]>([{
     available: true,
     description: "dfgdfg",
     id: 25,
@@ -18,35 +35,35 @@ const Dashboard = () => {
     name: "dfg",
     price: "dfgdfg",
   }]);
-  const [editingFood, setEditingFood] = useState({});
+  const [editingFood, setEditingFood] = useState<Food>({} as Food);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false)
 
 
-  useEffect(async() => {
+  useEffect(() => {
+    async function getFoods() {
     const response = await api.get('/foods');
-
     setFoods(response.data)
+    }
+    getFoods();
   }, [])
 
 
 
-  const handleAddFood = async food => {
+  const handleAddFood = async (food: AddFood): Promise<void> => {
     try {
       const response = await api.post('/foods', {
         ...food,
         available: true,
       });
 
-
       setFoods([...foods, response.data]);
-
     } catch (err) {
       console.log(err);
     }
   }
 
-  const handleUpdateFood = async food => {
+  const handleUpdateFood = async (food: AddFood): Promise<void>  => {
 
     try {
       const foodUpdated = await api.put(
@@ -64,7 +81,7 @@ const Dashboard = () => {
     }
   }
 
-  const handleDeleteFood = async id => {
+  const handleDeleteFood = async (id: number)=> {
 
     await api.delete(`/foods/${id}`);
 
@@ -82,7 +99,7 @@ const Dashboard = () => {
     setEditModalOpen(!editModalOpen);
   }
 
-  const handleEditFood = food => {
+  const handleEditFood = (food: Food) => {
     setEditingFood(food);
     setEditModalOpen(true)
   }

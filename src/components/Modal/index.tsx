@@ -6,11 +6,10 @@ interface ModalProps {
   isOpen: boolean;
   setIsOpen: () => void;
   children: React.ReactNode;
-  props?: any
 
 }
 
-export function Modal({ isOpen, setIsOpen, children, props }: ModalProps){
+export function Modal({ isOpen, setIsOpen, children }: ModalProps){
 
 
     const [modalStatus, setModalStatus] = useState(isOpen)
@@ -18,7 +17,6 @@ export function Modal({ isOpen, setIsOpen, children, props }: ModalProps){
 
  useEffect(() => {
 
-      console.log(props)
       setModalStatus(isOpen)
     
   }, [isOpen])

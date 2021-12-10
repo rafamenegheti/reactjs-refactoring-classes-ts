@@ -1,4 +1,4 @@
-import {
+import React, {
   useEffect,
   useRef,
   useState,
@@ -8,11 +8,12 @@ import {
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
+import { IconBaseProps } from 'react-icons/lib';
 
 interface InputProps {
   name: string,
   icon?: string,
-  rest?: any
+  rest?: React.ComponentType<IconBaseProps>,
   placeholder: string
 }
 
